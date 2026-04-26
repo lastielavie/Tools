@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Super Tools Hub - Kumpulan alat produktivitas (Audit, Calculator, Reconcile) yang didesain agar cepat, pintar, dan simpel.">
+    <meta name="theme-color" content="#000000">
+    <title>Super Tools</title>
+
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="apple-touch-icon" href="assets/icon-192.png">
+    <link rel="manifest" href="manifest.json">
+    
+    <style>
+        :root { --bg-main: #fbf7f1; --text-main: #3e2723; }
+        [data-theme="dark"] { --bg-main: #1e1a18; --text-main: #efebe5; }
+        body { background-color: var(--bg-main); color: var(--text-main); margin: 0; }
+    </style>
+
+
+    <script>
+        if (localStorage.getItem('supertools_theme') === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+            document.documentElement.removeAttribute('data-theme');
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="shared/css/theme.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" title="Switch Theme"></button>
+
+    <main class="main-wrapper">
+
+        <header class="header-section">
+            <h1>Simple Works Better</h1>
+            <p>Faster, Smarter, Simpler</p>
+        </header>
+
+        <section class="cards-container">
+            <div class="card">
+                <h2>Reconcile</h2>
+                <a href="Reconcile/" class="card-btn">Access</a>
+            </div>
+
+            <div class="card">
+                <h2>Audit</h2>
+                <a href="Audit/" class="card-btn">Access</a>
+            </div>
+
+            <div class="card">
+                <h2>Calculator</h2>
+                <a href="Calculator/" class="card-btn">Access</a>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

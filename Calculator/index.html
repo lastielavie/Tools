@@ -1,0 +1,122 @@
+---
+permalink: /Calculator/
+---
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Calculator Proporsional - Alat untuk membagi beban transaksi secara adil per cabang.">
+    <meta name="theme-color" content="#000000">
+    <title>Calculator</title>
+
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon-calculator.svg">
+    <link rel="apple-touch-icon" href="../assets/icon-192.png">
+    <link rel="manifest" href="../manifest.json">
+    
+    <style>
+        :root { --bg-main: #fbf7f1; --text-main: #3e2723; }
+        [data-theme="dark"] { --bg-main: #1e1a18; --text-main: #efebe5; }
+        body { background-color: var(--bg-main); color: var(--text-main); margin: 0; }
+    </style>
+    <script>
+        if (localStorage.getItem('supertools_theme') === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+            document.documentElement.removeAttribute('data-theme');
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../shared/css/theme.css">
+    <link rel="stylesheet" href="../shared/css/cards.css">
+    <link rel="stylesheet" href="../shared/css/buttons.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="hw">
+        <a href="../" class="btn-back" onclick="handleBack(event)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 12H5"></path>
+                <path d="M12 19l-7-7 7-7"></path>
+            </svg>
+        </a>
+        <div class="header">
+            <h1>Calculator</h1>
+        </div>
+    </header>
+
+    <main class="layout">
+        <div class="panel">
+            <h2>1. Masukkan Data</h2>
+            <div class="flex-bt">
+                <label class="input-label">Paste Template Di Sini</label>
+                <button class="btn-icon" onclick="clearInput()" title="Bersihkan Data">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    </svg>
+                </button>
+            </div>
+            <textarea id="inp"
+                placeholder="*xx cabang >> mmt bsi*&#10;*xxxxx* per cabang&#10;&#10;Transaksi A xxxxx&#10;Transaksi B xxxxx&#10;&#10;Total xxxxx"
+                oninput="calc()"></textarea>
+        </div>
+        <div class="panel">
+            <h2>2. Hasil Perhitungan</h2>
+            <div id="empty">
+                <svg class="empty-svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+                    <line x1="8" y1="6" x2="16" y2="6"></line>
+                    <line x1="16" y1="14" x2="16" y2="18"></line>
+                    <path d="M8 10h.01"></path>
+                    <path d="M12 10h.01"></path>
+                    <path d="M16 10h.01"></path>
+                    <path d="M8 14h.01"></path>
+                    <path d="M12 14h.01"></path>
+                    <path d="M8 18h.01"></path>
+                    <path d="M12 18h.01"></path>
+                </svg>
+                <span>Belum ada data.<br>Silakan paste template di panel kiri.</span>
+            </div>
+            <div id="res">
+                <div class="cards">
+                    <div class="summary-box box-1">
+                        <p class="summary-title">Total Seluruh Transaksi</p>
+                        <div class="summary-amount"><span id="t-all">Rp 0</span><button id="b-all"
+                                class="btn-copy"></button></div>
+                    </div>
+                    <div class="summary-box box-2">
+                        <p class="summary-title" id="l-div">Beban Per Cabang</p>
+                        <div class="summary-amount"><span id="t-div">Rp 0</span><button id="b-div"
+                                class="btn-copy"></button></div>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nama Transaksi</th>
+                                <th class="text-right">Proporsi</th>
+                                <th class="text-right">Beban/Cabang</th>
+                            </tr>
+                        </thead>
+                        <tbody id="t-body"></tbody>
+                        <tfoot id="t-foot"></tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../shared/js/clipboard.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

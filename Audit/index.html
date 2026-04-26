@@ -1,0 +1,218 @@
+---
+permalink: /Audit/
+---
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Audit Tool - Aplikasi untuk memproses dan mengaudit mutasi BSI secara otomatis.">
+    <meta name="theme-color" content="#000000">
+    <title>Audit</title>
+
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon-audit.svg">
+    <link rel="apple-touch-icon" href="../assets/icon-192.png">
+    <link rel="manifest" href="../manifest.json">
+    
+    <style>
+        :root { --bg-main: #fbf7f1; --text-main: #3e2723; }
+        [data-theme="dark"] { --bg-main: #1e1a18; --text-main: #efebe5; }
+        body { background-color: var(--bg-main); color: var(--text-main); margin: 0; }
+    </style>
+    <script>
+        if (localStorage.getItem('supertools_theme') === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+            document.documentElement.removeAttribute('data-theme');
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../shared/css/theme.css">
+    <link rel="stylesheet" href="../shared/css/cards.css">
+    <link rel="stylesheet" href="../shared/css/buttons.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="container">
+        <header class="header-container">
+            <div class="header-left">
+                <a href="../" class="btn-back">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 12H5" />
+                        <path d="M12 19l-7-7 7-7" />
+                    </svg>
+                </a>
+                <h2>Audit</h2>
+            </div>
+        </header>
+
+        <div class="input-section">
+            <textarea id="rawInput" placeholder="Paste data mutasi di sini..."></textarea>
+
+            <div class="controls-group">
+                <button class="btn-icon" id="btnClear">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="3 6 5 6 21 6" />
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                    </svg>
+                </button>
+
+                <label class="btn-icon">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="17 8 12 3 7 8" />
+                        <line x1="12" y1="3" x2="12" y2="15" />
+                    </svg>
+                    <input type="file" id="excelUpload" accept=".xlsx, .xls, .csv" class="hidden-state" />
+                </label>
+
+                <button class="btn-icon hidden-state" id="btnDownloadWord" onclick="downloadTableToWord()">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="7 10 12 15 17 10" />
+                        <line x1="12" y1="15" x2="12" y2="3" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div id="emptyState">
+            <svg class="empty-svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#cbd5e1"
+                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+            <span>Tabel mutasi akan muncul di sini</span>
+        </div>
+
+        <div id="dataState" class="hidden-state">
+            <div id="qrisErrorBox" class="error-box">
+                <span>Nilai admin QRIS mungkin bukan 0,7%. <u>Masukkan nominal Actual manual</u>!</span>
+            </div>
+
+            <div id="edcErrorBox" class="error-box">
+                <span>Nilai admin EDC bukan 1%. <u>Masukkan nominal Actual manual</u>!</span>
+            </div>
+
+            <div class="summary-section" id="summaryCards">
+                <div class="summary-box box-1">
+                    <p class="summary-title">Raw Qris</p>
+                    <div class="summary-amount">
+                        <span id="rawQrisDisplay">Rp 0</span>
+                        <button class="btn-copy" onclick="copyVal('rawQrisDisplay', null, this)"></button>
+                    </div>
+                </div>
+
+                <div class="summary-box box-2">
+                    <p class="summary-title">Admin Qris (0,7%)</p>
+                    <div class="summary-amount">
+                        <span id="adminQrisDisplay">Rp 0</span>
+                        <button class="btn-copy" onclick="copyVal('adminQrisDisplay', null, this)"></button>
+                    </div>
+                </div>
+
+                <div class="summary-box box-3">
+                    <p class="summary-title">QRIS Actual</p>
+                    <div class="summary-amount">
+                        <span id="qrisActualDisplay">Rp 0</span>
+                        <input type="text" id="qrisActualInput" class="manual-input hidden-state"
+                            placeholder="Nominal...">
+                        <button class="btn-copy"
+                            onclick="copyVal('qrisActualDisplay', 'qrisActualInput', this)"></button>
+                    </div>
+                </div>
+
+                <div class="summary-box box-4">
+                    <p class="summary-title other-cr-title">Total BSI OPS</p>
+                    <div class="summary-amount other-cr-amount">
+                        <span id="otherCrDisplay">Rp 0</span>
+                        <button class="btn-copy" onclick="copyVal('otherCrDisplay', null, this)"></button>
+                    </div>
+                </div>
+
+                <div class="summary-box box-5">
+                    <p class="summary-title">Raw EDC</p>
+                    <div class="summary-amount">
+                        <span id="rawEdcDisplay">Rp 0</span>
+                        <button class="btn-copy" onclick="copyVal('rawEdcDisplay', null, this)"></button>
+                    </div>
+                </div>
+
+                <div class="summary-box box-6">
+                    <p class="summary-title">Admin EDC (1%)</p>
+                    <div class="summary-amount">
+                        <span id="adminEdcDisplay">Rp 0</span>
+                        <button class="btn-copy" onclick="copyVal('adminEdcDisplay', null, this)"></button>
+                    </div>
+                </div>
+
+                <div class="summary-box box-7">
+                    <p class="summary-title">EDC Actual</p>
+                    <div class="summary-amount">
+                        <span id="edcActualDisplay">Rp 0</span>
+                        <input type="text" id="edcActualInput" class="manual-input hidden-state"
+                            placeholder="Nominal...">
+                        <button class="btn-copy" onclick="copyVal('edcActualDisplay', 'edcActualInput', this)"></button>
+                    </div>
+                </div>
+
+                <div class="summary-box box-8">
+                    <p class="summary-title">Setoran Tunai</p>
+                    <div class="summary-amount">
+                        <span id="setoranTunaiDisplay">Rp 0</span>
+                        <button class="btn-copy" onclick="copyVal('setoranTunaiDisplay', null, this)"></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="col-gear" title="Action">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                    <path
+                                        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                                    </path>
+                                </svg>
+                            </th>
+                            <th>Date</th>
+                            <th>FT Number</th>
+                            <th>Description</th>
+                            <th>Currency</th>
+                            <th class="col-right">Amount</th>
+                            <th class="col-center">DB</th>
+                            <th class="col-center">CR</th>
+                            <th class="col-right">Balance</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://unpkg.com/html-docx-js@0.3.1/dist/html-docx.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <script src="../shared/js/utils.js"></script>
+    <script src="../shared/js/excel-upload.js"></script>
+    <script src="../shared/js/clipboard.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

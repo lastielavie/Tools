@@ -1,0 +1,71 @@
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    color: var(--text-main);
+    text-decoration: none;
+    background: var(--border-color);
+    border-radius: 8px;
+    transition: 0.2s;
+    border: none;
+    cursor: pointer;
+}
+.btn-back:hover {
+    background: var(--border-hover);
+}
+.btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    background: var(--surface-hover);
+    color: var(--text-muted);
+    border: 1px solid var(--border-hover);
+    border-radius: 99px;
+    font-weight: 700;
+    font-family: inherit;
+    font-size: 12px;
+    gap: 4px;
+    cursor: pointer;
+    margin: 0;
+    transition: 0.2s;
+}
+.btn-icon:hover {
+    background: var(--border-color);
+    color: var(--text-main);
+    transform: translateY(-1px);
+}
+.btn-icon:active {
+    transform: scale(0.96);
+}
+.btn-copy {
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    background: var(--surface);
+    color: var(--accent-color);
+    border: 1px solid var(--border-hover);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    box-shadow: 0 1px 2px var(--accent-shadow);
+}
+.btn-copy:hover {
+    background: var(--border-color);
+    color: var(--text-main);
+    border-color: var(--accent-color);
+    transform: scale(1.05);
+}
+.btn-copy:active {
+    transform: scale(0.9);
+}
+.btn-copy.copied {
+    background: var(--copy-success-bg);
+    color: var(--copy-success-icon);
+    border-color: var(--copy-success-bg);
+    transform: scale(1.05);
+}
