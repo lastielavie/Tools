@@ -17,7 +17,7 @@ permalink: /Audit/
     
     <style>
         :root { --bg-main: #fbf7f1; --text-main: #3e2723; }
-        [data-theme="dark"] { --bg-main: #1e1a18; --text-main: #efebe5; }
+        [data-theme="dark"] { --bg-main: #1e1a18; --text-main: #efebe5; color-scheme: dark; }
         body { background-color: var(--bg-main); color: var(--text-main); margin: 0; }
     </style>
     <script>
@@ -81,6 +81,11 @@ permalink: /Audit/
                         <line x1="12" y1="15" x2="12" y2="3" />
                     </svg>
                 </button>
+
+                <label id="toggleHiddenLabel" class="hidden-state" style="display: none; align-items: center; gap: 6px; cursor: pointer; font-size: 13px; font-weight: 600; color: var(--text-muted);">
+                    <input type="checkbox" id="hideInvalidCb" checked>
+                    Sembunyikan DB & QR Invalid
+                </label>
             </div>
         </div>
 
@@ -176,7 +181,7 @@ permalink: /Audit/
                 </div>
             </div>
 
-            <div class="table-container">
+            <div class="table-container hide-invalid" id="tableContainer">
                 <table>
                     <thead>
                         <tr>

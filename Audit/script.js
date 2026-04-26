@@ -70,6 +70,15 @@ $('rawInput').oninput = () => {
 $('edcActualInput').oninput = proc;
 $('qrisActualInput').oninput = proc;
 
+$('hideInvalidCb').addEventListener('change', (e) => {
+    const container = $('tableContainer');
+    if (e.target.checked) {
+        container.classList.add('hide-invalid');
+    } else {
+        container.classList.remove('hide-invalid');
+    }
+});
+
 function proc() {
     const text = $('rawInput').value;
     parsedTx = [];
@@ -277,6 +286,10 @@ function actState(s, msg = '') {
     if (btnDownload) {
         btnDownload.style.display = (s === 'data') ? 'flex' : 'none';
     }
+    let toggleLabel = $('toggleHiddenLabel');
+    if (toggleLabel) {
+        toggleLabel.style.display = (s === 'data') ? 'flex' : 'none';
+    }
 }
 
 function renderTbl() {
@@ -289,19 +302,26 @@ function renderTbl() {
     let d1 = uDt.length > 0 ? uDt[0] : null;
 
     let rowsHTML = parsedTx.map(t => {
-        let cls = '';
+        let clsArr = [];
         let act = '';
         
         if (incPink.has(t.id)) {
-            cls = 'highlight-setoran';
+            clsArr.push('highlight-setoran');
         } else if (t.qris && !t.exY) {
-            cls = 'highlight-qris';
+            clsArr.push('highlight-qris');
         } else if (t.edc) {
-            cls = 'highlight-edc';
+            clsArr.push('highlight-edc');
         } else if (t.ops && !t.exC) {
-            cls = 'highlight-ops';
+            clsArr.push('highlight-ops');
         }
         
+        let isInvalidQR = t.typ === 'CR' && t.desc.toUpperCase().includes('QR') && !t.qris;
+        if (t.typ === 'DB' || isInvalidQR) {
+            clsArr.push('row-hidden');
+        }
+        
+        let cls = clsArr.join(' ');
+
         let txDate = t.dt.split(/\s+/)[0];
         let isFullAngka = /^\d+$/.test(t.desc.replace(/\s+/g, ''));
         let isDay1FullAngka = (txDate === d1 && isFullAngka);
