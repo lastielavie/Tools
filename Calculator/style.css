@@ -11,7 +11,7 @@ body {
     align-items: center;
     justify-content: flex-start;
     gap: 12px;
-    animation: fadeIn 0.4s ease-out forwards;
+    animation: fadeIn 0.6s ease-out forwards;
 }
 
 .header {
@@ -33,7 +33,7 @@ body {
     max-width: 1050px;
     margin: auto;
     align-items: stretch;
-    animation: fadeIn 0.5s ease-out forwards;
+    animation: fadeIn 0.8s ease-out forwards;
 }
 
 .panel {

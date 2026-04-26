@@ -8,7 +8,7 @@ body {
     padding: 20px;
     border-radius: 16px;
     box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.05);
-    animation: fadeIn 0.4s ease-out forwards;
+    animation: fadeIn 0.6s ease-out forwards;
 }
 .header-container {
     display: flex;
@@ -83,7 +83,7 @@ code {
     flex: 1;
     min-width: 0;
     box-sizing: border-box;
-    background: rgba(255, 255, 255, 0.7);
+    background: var(--surface-hover);
     border-radius: 6px;
     padding: 2px 6px;
     font: inherit;
@@ -187,11 +187,7 @@ tr:hover td {
     font-weight: 500;
 }
 .highlight-qris td { background: var(--hl-qris-bg) !important; color: var(--hl-qris-txt) !important; }
-.highlight-qris td input { background: rgba(0,0,0,0.1); color: inherit; }
-.highlight-qris td input:focus { background: rgba(0,0,0,0.2); border-bottom-color: var(--hl-qris-txt); }
 .highlight-edc td { background: var(--hl-edc-bg) !important; color: var(--hl-edc-txt) !important; }
-.highlight-edc td input { background: rgba(0,0,0,0.1); color: inherit; }
-.highlight-edc td input:focus { background: rgba(0,0,0,0.2); border-bottom-color: var(--hl-edc-txt); }
 .highlight-ops td { background: var(--hl-ops-bg) !important; color: var(--hl-ops-txt) !important; }
 .highlight-setoran td { background: var(--hl-setoran-bg) !important; color: var(--hl-setoran-txt) !important; }
 .action-x {

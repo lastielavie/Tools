@@ -1,13 +1,9 @@
 :root {
-    --radius-bento: 16px; 
     --radius-pill: 999px;
 }
 
 body { 
-    font-family: var(--font-main); 
-    margin: 0; 
     padding: 16px; 
-    -webkit-font-smoothing: antialiased; 
 }
 
 .header-container { 
@@ -159,6 +155,7 @@ tr:hover td {
     padding: 20px; 
     border-radius: 20px; 
     box-shadow: 0 4px 20px -5px rgba(0,0,0,0.05); 
+    animation: fadeIn 0.6s ease-out forwards;
 }
 
 h2 { 
@@ -247,16 +244,8 @@ th {
     border-radius: var(--radius-pill); 
     display: inline-block; 
     font-size: 10px; 
-}
-
-.cr-label { 
-    background: var(--summary-bg); 
-    color: var(--summary-text); 
-}
-
-.db-label { 
-    background: #fee2e2; 
-    color: #b91c1c; 
+    background: transparent;
+    color: var(--text-muted);
 }
 
 .desc { 
@@ -309,5 +298,3 @@ table.hide-minor-trx tr.is-minor {
         gap: 10px; 
     } 
 }
-
-

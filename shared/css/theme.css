@@ -1,49 +1,62 @@
 :root {
     --font-main: 'Plus Jakarta Sans', sans-serif;
+    color-scheme: light;
 
-    --hl-qris-bg: #fef08a;
-    --hl-qris-txt: #854d0e;
-    
-    --hl-edc-bg: #bef264;
-    --hl-edc-txt: #1a2e05;
-    
-    --hl-ops-bg: #cffafe;
-    --hl-ops-txt: #0891b2;
-    
+    /* Highlight Colors - Sangat lembut dan nyaman di mata */
+    --hl-qris-bg: #fef9c3;
+    --hl-qris-txt: #a16207;
+    --hl-edc-bg: #dcfce7;
+    --hl-edc-txt: #15803d;
+    --hl-ops-bg: #e0f2fe;
+    --hl-ops-txt: #0369a1;
     --hl-setoran-bg: #fce7f3;
     --hl-setoran-txt: #9d174d;
 
-    --bg-main: #f0f4f8;
+    /* Light Theme - Modern Fintech */
+    --bg-main: #f1f5f9;
     --surface: #ffffff;
-    --surface-hover: #e2e8f0;
-    --text-main: #1e293b;
-    --text-muted: #475569;
+    --surface-hover: #f8fafc;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
     --border-color: #e2e8f0;
     --border-hover: #cbd5e1;
-    --summary-bg: #f1f5f9;
-    --summary-text: #1e293b;
+    --summary-bg: #eef2ff;
+    --summary-text: #312e81;
 
-    --accent-color: #2563eb;
-    --accent-shadow: rgba(37, 99, 235, 0.15);
-    --copy-success-bg: #2563eb;
+    --accent-color: #6366f1; /* Vibrant Indigo */
+    --accent-shadow: rgba(99, 102, 241, 0.2);
+    --copy-success-bg: #10b981; /* Emerald Green */
     --copy-success-icon: #ffffff;
 }
 
 [data-theme="dark"] {
-    --bg-main: #0f172a;
-    --surface: #1e293b;
-    --surface-hover: #334155;
+    color-scheme: dark;
+    
+    /* Highlight Colors - Khusus Dark Mode agar tidak menyilaukan */
+    --hl-qris-bg: rgba(234, 179, 8, 0.15);
+    --hl-qris-txt: #fde047;
+    --hl-edc-bg: rgba(34, 197, 94, 0.15);
+    --hl-edc-txt: #86efac;
+    --hl-ops-bg: rgba(14, 165, 233, 0.15);
+    --hl-ops-txt: #7dd3fc;
+    --hl-setoran-bg: rgba(236, 72, 153, 0.15);
+    --hl-setoran-txt: #f9a8d4;
+
+    /* Dark Theme - Midnight OLED */
+    --bg-main: #020617;
+    --surface: #0f172a;
+    --surface-hover: #1e293b;
     --text-main: #f8fafc;
     --text-muted: #94a3b8;
-    --border-color: #334155;
-    --border-hover: #475569;
+    --border-color: #1e293b;
+    --border-hover: #334155;
     --summary-bg: #1e293b;
     --summary-text: #f8fafc;
 
-    --accent-color: #60a5fa;
-    --accent-shadow: rgba(96, 165, 250, 0.25);
-    --copy-success-bg: #60a5fa;
-    --copy-success-icon: #0f172a;
+    --accent-color: #818cf8;
+    --accent-shadow: rgba(129, 140, 248, 0.25);
+    --copy-success-bg: #10b981;
+    --copy-success-icon: #ffffff;
 }
 
 body {
