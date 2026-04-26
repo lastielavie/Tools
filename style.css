@@ -7,7 +7,6 @@
 }
 
 body {
-    font-family: var(--font-main);
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -143,5 +142,3 @@ body {
     }
     .card { padding: 20px 15px; }
 }
-
-

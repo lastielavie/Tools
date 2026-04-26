@@ -49,4 +49,12 @@
 body {
     background-color: var(--bg-main);
     color: var(--text-main);
+    font-family: var(--font-main);
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
 }

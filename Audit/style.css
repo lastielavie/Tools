@@ -1,6 +1,4 @@
 body {
-    font-family: var(--font-main);
-    margin: 0;
     padding: 16px;
 }
 .container {
@@ -10,6 +8,7 @@ body {
     padding: 20px;
     border-radius: 16px;
     box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.05);
+    animation: fadeIn 0.4s ease-out forwards;
 }
 .header-container {
     display: flex;
@@ -231,5 +230,5 @@ tr:hover td {
 @media (max-width: 576px) {
     .summary-section { grid-template-columns: 1fr; }
     .container { padding: 16px; }
-    .header-container, .summary-box.box-4 { flex-direction: column; align-items: flex-start; }
+    .header-container { flex-direction: column; align-items: flex-start; }
 }

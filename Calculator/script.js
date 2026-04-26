@@ -1,8 +1,3 @@
-function handleBack(e) {
-    e.preventDefault();
-    window.location.href = '../';
-}
-
 function fmt(n, c) {
     let options = {};
     if (c) {
@@ -11,14 +6,9 @@ function fmt(n, c) {
     return new Intl.NumberFormat('id-ID', options).format(n);
 }
 
-function $(id) {
-    return document.getElementById(id);
-}
-
-function calc() {
+function parseInput(txt) {
     let items = [];
     let tot = 0;
-    let txt = $('inp').value;
     let matchDiv = txt.match(/(\d+)\s*cabang/i);
     let div = parseInt((matchDiv || [])[1]) || 1;
     let lines = txt.split('\n');
@@ -32,29 +22,54 @@ function calc() {
             }
         }
     });
+    return { div, items, tot };
+}
+
+function calculateProportions(items, tot, div) {
+    let pDiv = Math.ceil(tot / div);
+    let acc = 0;
+    let results = [];
+    
+    items.forEach((i, x) => {
+        let b = (x === items.length - 1) ? pDiv - acc : Math.round(i.v / div);
+        acc += b;
+        results.push({ 
+            ...i, 
+            b: b, 
+            prop: (i.v / tot * 100).toFixed(2) 
+        });
+    });
+    
+    return { pDiv, results };
+}
+
+function calc() {
+    let txt = $('inp').value;
+    const { div, items, tot } = parseInput(txt);
+
     if (!items.length) {
         return resetView();
     }
-    let pDiv = Math.ceil(tot / div);
-    let acc = 0;
+    
+    const { pDiv, results } = calculateProportions(items, tot, div);
+
     let tb = '';
     $('l-div').innerText = `Beban Per Cabang (${div})`;
     setResult('t-all', 'b-all', fmt(tot));
     setResult('t-div', 'b-div', fmt(pDiv));
-    items.forEach((i, x) => {
-        let b = (x === items.length - 1) ? pDiv - acc : Math.round(i.v / div);
-        acc += b;
+    
+    results.forEach(res => {
         tb += `
             <tr>
                 <td>
-                    <div class="trx-name">${i.n}</div>
-                    <div class="trx-original">Asli: ${fmt(i.v)}</div>
+                    <div class="trx-name">${res.n}</div>
+                    <div class="trx-original">Asli: ${fmt(res.v)}</div>
                 </td>
-                <td class="text-right trx-prop">${(i.v / tot * 100).toFixed(2)}%</td>
+                <td class="text-right trx-prop">${res.prop}%</td>
                 <td class="text-right">
                     <div class="flex-cell">
-                        <strong class="trx-b-main">${fmt(b)}</strong>
-                        ${renderCopyBtn(fmt(b))}
+                        <strong class="trx-b-main">${fmt(res.b)}</strong>
+                        ${renderCopyBtn(fmt(res.b))}
                     </div>
                 </td>
             </tr>

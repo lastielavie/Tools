@@ -46,6 +46,7 @@
     height: 24px;
     background: var(--surface);
     color: var(--accent-color);
+    flex-shrink: 0;
     border: 1px solid var(--border-hover);
     border-radius: 50%;
     display: inline-flex;

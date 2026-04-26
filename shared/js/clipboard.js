@@ -29,7 +29,6 @@ if (document.readyState === 'loading') {
 }
 
 window.copyVal = function(displayId, inputId, btn) {
-    const $ = id => document.getElementById(id);
     let target = $(displayId);
     if (!target) return;
     let value = target.innerText;
